@@ -12,14 +12,14 @@ int main() {
 	    for(int i=0;i<n; i++)
 	        scanf("%d",&ar[i]);
 	    int b[n];
-	    
+	    //Actual login begins..
 	    for(int i=0;i<n;i++)
 	       {
-	           if(d==n)
-	            d = 0;
+	           if(d>=n)
+	           	 d-=n; 
 	            b[i]=ar[d++];
 	         }
-	        
+	    // Logic ends...
 	for(int i=0; i<n;i++)
 	    printf("%d ",b[i]);
     printf("\n");
