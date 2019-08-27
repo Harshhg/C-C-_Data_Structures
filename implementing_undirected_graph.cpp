@@ -5,7 +5,7 @@ using namespace std;
 void addEdge(vector<int> adj[], int u , int v)
 {
     adj[u].push_back(v);
-    adj[v].push_back(u);
+    adj[v].push_back(u); // because it is a undirected graph
 }
 
 void printGraph(vector<int> adj[], int V) 
