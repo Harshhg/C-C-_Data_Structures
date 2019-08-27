@@ -20,18 +20,18 @@ void printGraph(vector<int> adj[], int V)
         
     } 
 } 
-void BFS(vector<int> adj[], int S)
+void BFS(vector<int> adj[], int S, int V)
 {
     int cur;
 list<int>queue;
 queue.push_back(S);
-int ar[5];
 
+int ar[V];
 /* Initializing visited array with 0
  0 - not visited
  1 - visited
 */
-for(int i=0; i<5; i++)
+for(int i=0; i<V; i++)
 ar[i]=0;
 
 
@@ -63,5 +63,5 @@ int main()
     addEdge(adj,3,4); 
     printGraph(adj,V);
     cout<<"\nBFS of this graph is : \n";
-    BFS(adj,0);
+    BFS(adj,0,V);
 }
