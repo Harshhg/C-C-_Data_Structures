@@ -65,3 +65,25 @@ int main()
     cout<<"\nBFS of this graph is : \n";
     BFS(adj,0,V);
 }
+// OUTPUT
+/*
+
+ Adjacency list of vertex 0
+ head -> 1-> 4
+
+ Adjacency list of vertex 1
+ head -> 0-> 2-> 3-> 4
+
+ Adjacency list of vertex 2
+ head -> 1-> 3
+
+ Adjacency list of vertex 3
+ head -> 1-> 2-> 4
+
+ Adjacency list of vertex 4
+ head -> 0-> 1-> 3
+
+BFS of this graph is : 
+0-1-4-2-3-
+
+*/
