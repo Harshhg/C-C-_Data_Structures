@@ -3,16 +3,12 @@
 using namespace std;
 #define V 5   // number of vertices in a graph.
 
-
 // function to print the final results
 void print_result(int parent[], int key[])
 {
     cout<<"Edge \tWeight\n";
     for(int i=1; i<V; i++)
-    {
         cout<<parent[i]<<" - "<<i<<" \t"<<key[i]<<endl;
-    }
-    
 }
 
 // Function to find the minimum key value( weight) and return the index of it.
@@ -21,14 +17,8 @@ int min_key(int key[] , bool visited_set[])
     int min = INT_MAX;
     int min_index;
     for (int i=0; i<V; i++)
-    {
         if(key[i] < min  && visited_set[i] == false)
-            {
-                min = key[i];
-                min_index = i;
-            }
-    }
-    
+            min = key[i],min_index = i;
     return min_index;
 }
 
@@ -42,10 +32,8 @@ bool visited_set[V];    // will store the set of vertices that are visited.
 
 // Initializing all keys with infinite values and visited set with false.
 for (int i=0; i < V; i++)
-    {
-        key[i] = INT_MAX;
-        visited_set[i]=false;
-    }
+    key[i] = INT_MAX, visited_set[i]=false;
+
     
 // Starting the algo.
 key[0] = 0 ;        //initializing first key as 0
@@ -65,10 +53,10 @@ for (int count=0; count < V; count++)
                 parent[v] = u;   //  setting the parent of the node, from where we come to this node.
                 key[v] = graph[u][v];   // updating minimum path (weight) to that node.
             }
-    }   
+    }
 }
 // Finally printing the results
-    print_result(parent, key);   
+    print_result(parent, key);
 }
 
 // Main function
@@ -83,7 +71,6 @@ int graph[V][V] =     { { 0, 2, 0, 6, 0 },
 prims_algo(graph);   
 return 0;
 }
-
 // OUTPUT
 /*
 Edge 	Weight
