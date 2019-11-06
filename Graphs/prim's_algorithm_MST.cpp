@@ -22,7 +22,6 @@ int min_key(int key[] , bool visited_set[])
     return min_index;
 }
 
-
 // Prim's algorithm
 void prims_algo(int graph[V][V])
 {
