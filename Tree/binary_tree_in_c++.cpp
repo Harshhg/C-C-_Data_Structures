@@ -1,35 +1,33 @@
 #include <iostream>
-
 using namespace std;
-
-struct node
+struct Treenode             // creating a node structure
 {
-    int data;
-    struct node* left;
-    struct node* right;
+    int val;
+    Treenode* left;
+    Treenode* right;
 };
-struct node* newNode(int key)
+Treenode* newNode(int val)      // function to initialize a node with value.  Function return type is struct node.
 {
-    struct node* temp = new node;
-    temp->data = key;
-    temp->left = NULL;
-    temp->right = NULL;
-    return temp;
+    Treenode* node = new Treenode;     //creating a node of struct type and allocating memory to it.
+    node->val = val;
+    node->left = NULL;
+    node->right = NULL;
+    return node;
 }
-void inorder(struct node* root)
+void inorder(Treenode* root)        // function to print the inorder traversal of the tree
 {
-    if (!root)
-        return;
-    inorder(root->left);     
-    cout<<root->data<<"-";
+    if(!root)
+    return;
+    inorder(root->left);
+    cout<<root->val<<" ";
     inorder(root->right);
-        
-        
 }
-int main()
+int main() 
 {
-    struct node* root = newNode(10);
-    root->left = newNode(20);
-    root->right = newNode(30);
-    inorder(root);
+ Treenode* root = newNode(10);      //creating a root node and initializing.
+ root->left = newNode(5);
+ root->right =  newNode(7);
+ root->left->left = newNode(3);
+ root->left->right =  newNode(4);
+ inorder(root);
 }
