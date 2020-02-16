@@ -19,14 +19,12 @@ Find maximum number of coins that we can collect.
 
 #include <iostream>
 using namespace std;
-int row, col;
-int result=0;
-int used=0;
+int result=0,used=0;
 int main() 
 {
-     row=7;
-     col=5;
+    int row=11,col=5;
     char grid[row][col];
+    
     for(int i=0; i<row; i++)
         for(int j=0; j<col; j++)
             cin>>grid[i][j];
@@ -35,6 +33,7 @@ int main()
     int s_col = col/2;
     
     void dfs(int row, int col, char *grid, int x, int y, int cursum, int bomb_used);
+    
     dfs(row,col,(char *)grid, s_row, s_col, 0, 0);
     
     cout<<"Maximum coin is :- "<< result<<endl;
@@ -45,6 +44,8 @@ void dfs( int row, int col, char *grid, int x, int y, int cursum, int bomb_used)
 {
     void use_bomb(int row, int col, char* grid, int x, int y);
     void restore(int row, int col, char* grid, int x, int y);
+    bool isSafe(int row, int col, char* grid, int x, int y);
+    
     if(x<0)  //reached end of the line
         return;
       
@@ -53,54 +54,64 @@ void dfs( int row, int col, char *grid, int x, int y, int cursum, int bomb_used)
             cursum++;
             result=max(cursum,result);
     }
-    int bomb=0;
     //for left move
-    if(x-1 >=0 && y-1>=0)
-        if(*(grid+(x-1)*col + y-1) != '2')  //if move is safe
-            dfs(row,col, (char *)grid, x-1, y-1,cursum, 0);
-        else
-            bomb++;
+    if(isSafe(row,col,(char *)grid, x-1, y-1))
+        dfs(row,col, (char *)grid, x-1, y-1,cursum,bomb_used);
             
     // for no move
-    if(x-1 >=0 && y>=0)
-        if(*(grid+(x-1)*col + y) != '2')  //if move is safe
-            dfs(row,col, (char *)grid, x-1, y,cursum, 0);
-        else
-            bomb++;
+    if(isSafe(row,col,(char *)grid, x-1, y))
+            dfs(row,col, (char *)grid, x-1, y,cursum, bomb_used);
             
    // for right move
-    if(x-1 >=0 && y+1<col)
-        if(*(grid+(x-1)*col + y+1) != '2')  //if move is safe
-            dfs(row,col, (char *)grid, x-1, y+1, cursum, 0);
-        else
-            bomb++;
-    
-    
-    if(bomb==3 && bomb_used==0)  //surrounded by enemy, need to use bomb
+    if(isSafe(row,col,(char *)grid, x-1, y+1))
+            dfs(row,col, (char *)grid, x-1, y+1, cursum,bomb_used);
+     
+    if(bomb_used==0)  //surrounded by enemy, need to use bomb
     {
         use_bomb(row,col, (char *)grid, x,y);
-        dfs(row,col, (char *)grid, x, y, cursum, 1);
+        bomb_used=1;
+        //for left move
+        if(isSafe(row,col,(char *)grid, x-1, y-1))
+            dfs(row,col, (char *)grid, x-1, y-1,cursum,bomb_used);
+            
+        // for no move
+        if(isSafe(row,col,(char *)grid, x-1, y))
+            dfs(row,col, (char *)grid, x-1, y,cursum, bomb_used);
+            
+        // for right move
+        if(isSafe(row,col,(char *)grid, x-1, y+1))
+            dfs(row,col, (char *)grid, x-1, y+1, cursum,bomb_used);
+            
         restore(row,col, (char *)grid, x,y);   //restoring the original state of grid
     }
-    
+
 }
+// Function that will use the bomb and destroy enemies in 5x5
 void use_bomb(int row, int col, char* grid, int x, int y)
 {
     used++;
     int i=(x-5>=0)?x-5:0;
     
-    for(; i<row; i++)
+    for(; i<x; i++)
 	    for(int j=0; j<col; j++)
 	        if(*(grid + i*col + j)=='2')
 	            *(grid + i*col + j)='9';
-	 cout<<"USED"<<endl;         	            
 }
+// Function that will restore the original grid before bomb.
 void restore(int row, int col, char* grid, int x, int y)
 {
-    int i=(x-5>=0)?x-5:0;
-    
-    for(; i<row; i++)
+     int i=(x-5>=0)?x-5:0;
+    for(; i<x; i++)
 	    for(int j=0; j<col; j++)
 	        if(*(grid + i*col + j)=='9')
-	            *(grid + i*col + j)='2';          
+	            *(grid + i*col + j)='2';	            
+}
+// Function to check if the move is safe
+bool isSafe(int row, int col, char* grid, int x, int y)
+{
+     if(x>=0 && y>=0 && y<col)
+         if(*(grid+x*col + y) != '2')  
+           return true;
+    
+    return false;
 }
